@@ -83,6 +83,7 @@ const CheckoutModal = ({ isOpen, onClose }) => {
               </select>
             </div>
           </div>
+
           <div className="flex justify-end">
             <button
               type="button"
