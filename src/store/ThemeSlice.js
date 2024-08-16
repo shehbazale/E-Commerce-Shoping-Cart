@@ -9,10 +9,13 @@ export const themeSlice = createSlice({
   initialState,
   reducers: {
     setTheme: (state, data) => {
-      state.color = data.payload.color;
-      state.textColor = data.payload.textColor;
-      console.log("theme color", state.color);
-      console.log("textcolor color", state.textColor);
+      // state.color = data.payload.color;
+      // state.textColor = data.payload.textColor;
+      state.theme = data.payload;
+      // state.theme.color = data.payload.color;
+      // state.theme.textColor = data.payload.textColor;
+      // console.log("theme color", state.color);
+      // console.log("textcolor color", state.textColor);
     },
   },
 });

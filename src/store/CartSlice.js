@@ -19,7 +19,7 @@ export const cartSlice = createSlice({
     removeFromCart: (state, data) => {
       // state.cart.splice(data.payload, 1);
       const removeItem = state.cart.filter((item) => item.id !== data.payload);
-      console.log("Item remove HO gia", removeItem);
+      console.log("Item remove ho gia", removeItem);
       state.cart = removeItem;
     },
     incrementQuantity: (state, data) => {

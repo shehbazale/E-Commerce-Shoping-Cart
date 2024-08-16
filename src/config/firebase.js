@@ -8,6 +8,7 @@ import {
   signOut,
   signInWithPopup,
   GoogleAuthProvider,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -33,7 +34,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage();
-const provider = new GoogleAuthProvider();
+// const provider = new GoogleAuthProvider();
 
 async function register(data) {
   const { fullname, age, email, password } = data;
@@ -75,7 +76,6 @@ const getProducts = async () => {
 const getSingleProduct = async (id) => {
   const docRef = doc(db, "products", id);
   const docSnap = await getDoc(docRef);
-
   // return docSnap.data();    // function to sinply return product object
   const data = docSnap.data();
   data.id = docSnap.id;
@@ -93,6 +93,11 @@ const signInWithGoogle = async () => {
     console.log("login errror", error);
   }
 };
+// Reset password function
+const passwordReset = (email) => {
+  return sendPasswordResetEmail(auth, email);
+};
+
 export {
   register,
   login,
@@ -108,4 +113,5 @@ export {
   getSingleProduct,
   signOut,
   signInWithGoogle,
+  passwordReset,
 };

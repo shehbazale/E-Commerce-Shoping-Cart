@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { register } from "../../config/firebase";
+import { auth, register } from "../../config/firebase";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 export default function Register() {
@@ -14,10 +14,12 @@ export default function Register() {
     try {
       const data = { fullname, age, email, password };
       await register(data);
+      await auth.signOut();
+      // navigate("/login");
       toast.success("Successfully Registered");
       setTimeout(() => {
-        navigate("/");
-      });
+        navigate("/login");
+      }, 1000);
     } catch (e) {
       toast.error(e.message);
     }
@@ -95,7 +97,7 @@ export default function Register() {
                       <p className="mt-6 text-lg font-bold text-gray-600 text-center">
                         <button
                           onClick={() => {
-                            navigate("/");
+                            navigate("/login");
                             // console.log("sign up click");
                           }}
                           className="border-b border-gray-500 border-dotted"

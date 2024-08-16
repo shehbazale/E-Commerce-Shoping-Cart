@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { addProduct } from "../../config/firebase";
 import toast, { Toaster } from "react-hot-toast";
 import { RxCross2 } from "react-icons/rx";
+import { useSelector } from "react-redux";
 const AddProduct = () => {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
@@ -17,7 +18,9 @@ const AddProduct = () => {
     price: false,
     image: false,
   });
+  // theme change function
 
+  const theme = useSelector((state) => state.themeStore.theme);
   const handleProduct = async (e) => {
     e.preventDefault();
     let formIsValid = true;
@@ -41,7 +44,10 @@ const AddProduct = () => {
         const products = { title, description, price, image };
         await addProduct(products);
         // alert("added ho gia");
-        toast.success("Product added Successfully");
+        toast.success("Product added to cart", {
+          positiont: toast.POSITION.TOP_LEFFT,
+          autoClose: 500,
+        });
         setTitle("");
         setDescription("");
         setPrice("");
@@ -105,18 +111,26 @@ const AddProduct = () => {
   };
   return (
     <>
-      <section className="rounded-md p-2 bg-[#e8e8e8] py-8">
+      <section
+        className="rounded-md p-2 py-8"
+        style={{ backgroundColor: theme.color, color: theme.textColor }}
+      >
         <Toaster position="top-right" reverseOrder={false} />
         <div className="flex items-center justify-center my-3 ">
-          <div className="xl:mx-auto rounded-md shadow-md p-4 xl:w-full xl:max-w-sm 2xl:max-w-md bg-white">
-            <div className="mb-2"></div>
-            <h2 className="text-2xl font-bold leading-tight">Add Product</h2>
+          <div
+            className={`xl:mx-auto rounded-md shadow-lg p-4 xl:w-full xl:max-w-sm 2xl:max-w-md ${
+              theme.color === "#262527" ? "bg-black/20" : "bg-white"
+            }`}
+          >
+            <div className="mb-2">
+              {" "}
+              <h2 className="text-2xl font-bold leading-tight">Add Product</h2>
+            </div>
+
             <form className="mt-5" onSubmit={handleProduct}>
               <div className="space-y-4">
                 <div>
-                  <label className="text-base font-medium text-gray-900">
-                    Title
-                  </label>
+                  <label className="text-base font-medium ">Title</label>
                   <div className="mt-2">
                     <input
                       placeholder="Title"
@@ -130,9 +144,7 @@ const AddProduct = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="text-base font-medium text-gray-900">
-                    Description
-                  </label>
+                  <label className="text-base font-medium">Description</label>
                   <div className="mt-2">
                     <textarea
                       id="w3review"
@@ -155,8 +167,8 @@ const AddProduct = () => {
                       <label className="text-base font-medium text-gray-900">
                         Category
                       </label>
-                    </div> */}
-                  {/* <div className="mt-2">
+                    </div> 
+                  <div className="mt-2">
                       <input
                         placeholder="Category"
                         type="text"
@@ -165,15 +177,21 @@ const AddProduct = () => {
                       />
                     </div> */}
                   <div className="flex items-center justify-between">
-                    <label className="text-base font-medium text-gray-900 ">
-                      Price
-                    </label>
+                    <label className="text-base font-medium ">Price</label>
                   </div>
                   <div className="mt-2">
                     <input
                       placeholder="Price"
                       type="number"
-                      onChange={(e) => setPrice(e.target.value)}
+                      // onChange={(e) => setPrice(e.target.value)}
+                      onChange={(e) => {
+                        setPrice(e.target.value);
+                        if (e.target.value)
+                          setError((prevErrors) => ({
+                            ...prevErrors,
+                            price: false,
+                          }));
+                      }}
                       className={`flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 ${
                         error.price ? "border-red-600" : "border-gray-300"
                       }`}
@@ -186,9 +204,9 @@ const AddProduct = () => {
                     </label>
                   </div> */}
 
-                  <div className="items-center justify-center max-w-xl mx-auto mt-4">
+                  <div className="items-center justify-center max-w-xl mx-auto mt-6">
                     <label
-                      className={`flex justify-center w-full h-12 px-4 transition bg-white border-2  border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none ${
+                      className={`flex justify-center w-full h-12 px-4 transition border-2  border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none ${
                         error.image
                           ? "border-red-600"
                           : "border-gray-300" && isDragging
@@ -203,7 +221,7 @@ const AddProduct = () => {
                       <span className="flex items-center space-x-2">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          className="w-6 h-6  text-gray-600"
+                          className="w-8 h-6 "
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -215,7 +233,7 @@ const AddProduct = () => {
                             d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                           ></path>
                         </svg>
-                        <span className="font-medium text-gray-600">
+                        <span className="font-medium ">
                           Drop files to Attach, or
                           <span className="text-blue-600 underline ml-[4px]">
                             browse

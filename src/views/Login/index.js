@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login, signInWithGoogle } from "../../config/firebase";
+import { login, passwordReset, signInWithGoogle } from "../../config/firebase";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function Login() {
@@ -43,7 +43,7 @@ export default function Login() {
       await login(email, password);
       toast.success("Successfully logged in");
       setTimeout(() => {
-        navigate("/dashboard", { replace: true });
+        navigate("/", { replace: true });
       }, 1000);
     } catch (e) {
       toast.error(e.message);
@@ -57,7 +57,7 @@ export default function Login() {
       if (result) {
         toast.success("successfully login");
         setTimeout(() => {
-          navigate("/dashboard", { replace: true });
+          navigate("/", { replace: true });
         }, 1000);
       }
     } catch (e) {
@@ -67,6 +67,14 @@ export default function Login() {
     // console.logo('click')
   };
 
+  const resetPassword = async () => {
+    try {
+      await passwordReset(email);
+      toast.success("Password reset link send");
+    } catch (e) {
+      toast.error(e.message);
+    }
+  };
   return (
     <>
       <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
@@ -111,7 +119,10 @@ export default function Login() {
                         </p>
                       )}
                       <div className="flex justify-end mt-4">
-                        <span className="text-sm text-right font-medium text-blue-800 hover:underline dark:text-primary-500 hover:cursor-pointer">
+                        <span
+                          className="text-sm text-right font-medium text-blue-800 hover:underline dark:text-primary-500 hover:cursor-pointer"
+                          onClick={resetPassword}
+                        >
                           Forgot password?
                         </span>
                       </div>
