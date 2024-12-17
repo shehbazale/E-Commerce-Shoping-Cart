@@ -76,7 +76,7 @@ const getProducts = async () => {
 const getSingleProduct = async (id) => {
   const docRef = doc(db, "products", id);
   const docSnap = await getDoc(docRef);
-  // return docSnap.data();    // function to sinply return product object
+  // return docSnap.data();    // function to  return product object
   const data = docSnap.data();
   data.id = docSnap.id;
   return data;

@@ -54,13 +54,13 @@ const Navbar = () => {
         alert(error);
       });
   };
-  const handleToggleChange = (e) => {
-    console.log("clicked hua");
-    const ischecked = e.target.checked;
+  const themeChange = (e) => {
+    // console.log("themechange");
+    const isChecked = e.target.checked;
     dispatch(
       setTheme({
-        color: ischecked ? "#262527" : "white",
-        textColor: ischecked ? "white" : "black",
+        color: isChecked ? "#262527" : "white",
+        textColor: isChecked ? "white" : "black",
       })
     );
   };
@@ -152,7 +152,7 @@ const Navbar = () => {
               className="peer hidden"
               id="toggle"
               type="checkbox"
-              onChange={handleToggleChange}
+              onChange={themeChange}
             />
             <div className="relative w-[50px] h-[24px] bg-white peer-checked:bg-zinc-500 rounded-full after:absolute after:content-[''] after:w-[20px] after:h-[20px] after:bg-gradient-to-r from-orange-500 to-yellow-400 peer-checked:after:from-zinc-900 peer-checked:after:to-zinc-900 after:rounded-full after:top-[2px] after:left-[2px] peer-checked:after:left-[calc(100%-20px-2px)] peer-checked:after:translate-x-[calc(100%-20px-2px)] shadow-sm duration-300 after:duration-300 after:shadow-md"></div>
             <svg

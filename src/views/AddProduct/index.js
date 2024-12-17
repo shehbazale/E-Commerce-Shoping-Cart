@@ -44,10 +44,7 @@ const AddProduct = () => {
         const products = { title, description, price, image };
         await addProduct(products);
         // alert("added ho gia");
-        toast.success("Product added to cart", {
-          positiont: toast.POSITION.TOP_LEFFT,
-          autoClose: 500,
-        });
+        toast.success("Product successfully added");
         setTitle("");
         setDescription("");
         setPrice("");

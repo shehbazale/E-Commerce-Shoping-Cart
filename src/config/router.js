@@ -70,7 +70,7 @@ function Main() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      setUser(user);
+      setUser(user); // taki dosray useeffect ko user mil sake
       setIschecked(true);
     });
   }, []);
